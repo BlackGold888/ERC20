@@ -7,10 +7,12 @@ contract ERC20 is IERC20{
     uint256 public totalSupply;
     string public name;
     string public symbol;
+    address public minter;
 
     constructor(string memory _name, string memory _symbol) {
         name = _name;
         symbol = _symbol;
+        minter = msg.sender;
     }
 
     function decimals() public view virtual returns (uint8) {
@@ -83,7 +85,7 @@ contract ERC20 is IERC20{
 
     function _mint(address account, uint256 amount) internal virtual {
         require(account != address(0), "Mint to the zero address");
-
+        require(msg.sender == minter, "You are not minter");
         totalSupply += amount;
         balances[account] += amount;
         emit Transfer(address(0), account, amount);
@@ -91,9 +93,10 @@ contract ERC20 is IERC20{
 
     function _burn(address account, uint256 amount) internal virtual {
         require(account != address(0), "Burn from the zero address");
+        require(msg.sender == minter, "You are not minter");
 
         uint256 accountBalance = balances[account];
-        require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
+        require(accountBalance >= amount, "Burn amount exceeds balance");
         balances[account] = accountBalance - amount;
         totalSupply -= amount;
 
