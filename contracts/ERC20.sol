@@ -13,7 +13,7 @@ contract ERC20 is IERC20{
         symbol = _symbol;
     }
 
-    function decimals() public view virtual override returns (uint8) {
+    function decimals() public view virtual returns (uint8) {
         return 18;
     }
 
@@ -93,7 +93,7 @@ contract ERC20 is IERC20{
         require(account != address(0), "Burn from the zero address");
 
         uint256 accountBalance = balances[account];
-        require(accountBalance >= amount, "Burn amount exceeds balance");
+        require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
         balances[account] = accountBalance - amount;
         totalSupply -= amount;
 
