@@ -47,7 +47,7 @@ describe("ERC20", function () {
     });
   });
 
-  describe("Allowance token", function () {
+  describe("Allowance token with approve", function () {
     it("Allowance token for address", async function () {
       await hardhatToken.mint(addr1.address, 100);
       await hardhatToken.connect(addr1).approve(addr2.address, 20);
@@ -80,6 +80,14 @@ describe("ERC20", function () {
       await hardhatToken.connect(addr2).transferFrom(addr1.address, addr2.address, 20);
       expect(await hardhatToken.balanceOf(addr2.address)).to.equal(20);
       expect(await hardhatToken.allowance(addr1.address, addr2.address)).to.equal(30);
+    });
+  });
+
+  describe("Approve token", function () {
+    it("Approve token", async function () {
+      await hardhatToken.mint(addr1.address, 100);
+      await hardhatToken.connect(addr1).approve(addr2.address, 50);
+      expect(await hardhatToken.allowance(addr1.address, addr2.address)).to.equal(50);
     });
   });
 
