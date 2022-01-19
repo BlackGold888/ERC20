@@ -17,6 +17,34 @@ describe("ERC20", function () {
     hardhatToken = await Token.deploy("ERC20", "ERC20");
   });
 
+  describe("name", function () {
+    it("Should return the contract name created in constructor", async function () {
+      expect(await hardhatToken.name()).to.equal("ERC20");
+    });
+  });
+
+  describe("symbol", function () {
+    it("Should return the contract symbol created in constructor", async function () {
+      expect(await hardhatToken.symbol()).to.equal("ERC20");
+    });
+  });
+
+  describe("balanceOf", function () {
+    it("Should return the address balance", async function () {
+      await hardhatToken.mint(owner.address, 100);
+      expect(await hardhatToken.balanceOf(owner.address)).to.equal(100);
+    });
+  });
+
+  describe("totalSupply", function () {
+    it("Should return the contract totalSupply", async function () {
+      await hardhatToken.mint(owner.address, 100);
+      await hardhatToken.mint(addr1.address, 100);
+      await hardhatToken.mint(addr2.address, 100);
+      expect(await hardhatToken.totalSupply()).to.equal(300);
+    });
+  });
+
   describe("Decimals", function () {
     it("Should return the dechimals once it's changed", async function () {
       expect(await hardhatToken.decimals()).to.equal(18);
