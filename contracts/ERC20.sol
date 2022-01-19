@@ -81,11 +81,21 @@ contract ERC20 is IERC20{
         return true;
     }
 
+    function mint(address _to, uint256 _amount) public virtual returns (bool) {
+        _mint(_to, _amount);
+        return true;
+    }
+
     function _mint(address account, uint256 amount) internal virtual {
         require(account != address(0), "Mint to the zero address");
         totalSupply += amount;
         balances[account] += amount;
         emit Transfer(address(0), account, amount);
+    }
+
+    function burn(address account, uint256 amount) public virtual returns (bool){
+        _burn(account, amount);
+        return true;
     }
 
     function _burn(address account, uint256 amount) internal virtual {
