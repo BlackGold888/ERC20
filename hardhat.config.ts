@@ -7,7 +7,7 @@ import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "@nomiclabs/hardhat-web3";
-import "./tasks/tasks";
+import "./tasks/index";
 
 dotenv.config();
 
