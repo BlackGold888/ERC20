@@ -30,9 +30,8 @@ contract ERC20 is IERC20{
         require(_from != address(0), "Transfer from the zero address");
         require(_to != address(0), "Transfer to the zero address");
 
-        uint256 senderBalance = balances[_from];
-        require(senderBalance >= _amount, "Transfer amount exceeds balance");
-        balances[_from] = senderBalance - _amount;
+        require(balances[_from] >= _amount, "Transfer amount exceeds balance");
+        balances[_from] = balances[_from] - _amount;
         balances[_to] += _amount;
 
         emit Transfer(_from, _to, _amount);
@@ -73,10 +72,9 @@ contract ERC20 is IERC20{
     }
 
      function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
-        uint256 currentAllowance = allowances[msg.sender][spender];
-        require(currentAllowance >= subtractedValue, "Decreased allowance below zero");
+        require(allowances[msg.sender][spender] >= subtractedValue, "Decreased allowance below zero");
 
-        _approve(msg.sender, spender, currentAllowance - subtractedValue);
+        _approve(msg.sender, spender, allowances[msg.sender][spender] - subtractedValue);
 
         return true;
     }
@@ -100,9 +98,8 @@ contract ERC20 is IERC20{
 
     function _burn(address account, uint256 amount) internal virtual {
         require(account != address(0), "Burn from the zero address");
-        uint256 accountBalance = balances[account];
-        require(accountBalance >= amount, "Burn amount exceeds balance");
-        balances[account] = accountBalance - amount;
+        require(balances[account] >= amount, "Burn amount exceeds balance");
+        balances[account] = balances[account] - amount;
         totalSupply -= amount;
 
         emit Transfer(account, address(0), amount);
