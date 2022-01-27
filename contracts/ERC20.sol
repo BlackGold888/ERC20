@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 import "./IERC20.sol";
 
@@ -29,7 +30,7 @@ contract ERC20 is IERC20{
     function _transfer(address _from, address _to, uint256 _amount) internal virtual {
         require(_from != address(0), "Transfer from the zero address");
         require(_to != address(0), "Transfer to the zero address");
-
+        
         require(balances[_from] >= _amount, "Transfer amount exceeds balance");
         balances[_from] = balances[_from] - _amount;
         balances[_to] += _amount;

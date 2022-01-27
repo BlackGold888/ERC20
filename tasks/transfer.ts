@@ -44,7 +44,7 @@ task("transfer", "Prints an account's balance")
     
         const fromBalance = hre.ethers.utils.formatEther(await hardhatToken.balanceOf(taskArgs.from));
         const toBalance = hre.ethers.utils.formatEther(await hardhatToken.balanceOf(taskArgs.to));
-    
+        
         console.log(`Account from balance ${fromBalance}`);
         console.log(`Account to ${toBalance}`);
         console.log(`Total supply ${total}`);
